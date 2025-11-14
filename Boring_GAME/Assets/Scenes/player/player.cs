@@ -7,30 +7,62 @@ public class player : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBarBehaviourScript healthBar;
+    public Score scorescript;
 
+    private Animator animator;
+    [SerializeField] GameObject button;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        animator = GetComponent<Animator>();        
+        button.SetActive(false); 
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (Input.GetKey(KeyCode.D))
         {
-          
+            
             transform.Translate(speed * Time.deltaTime, 0, 0);
+
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * 1;
+            transform.localScale = scale;
+            animator.SetBool("Walk",true);
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                animator.SetBool("Walk",false);
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            animator.SetBool("Walk",false);
         }
         else if (Input.GetKey(KeyCode.A))
         {
           
             transform.Translate(-speed * Time.deltaTime, 0, 0);
+
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * -1;
+            transform.localScale = scale;
+            animator.SetBool("Walk",true);
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                animator.SetBool("Walk",false);
+            }
         }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            animator.SetBool("Walk",false);
+        }
+        
 
     }
-    private void OnCollisionEnter2D(Collision2D other)
+    public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Pan")
         {
@@ -48,15 +80,42 @@ public class player : MonoBehaviour
             if (other.contacts[0].normal.y > 0.5f)
             {
                 //Debug.Log("Landed on Top of Trap");
-                health(-10);
+                health(-20);
                 now_floor = other.gameObject;
             }
+        }
+        else if (other.gameObject.tag == "Ceiling")
+        {
+            
+            health(-20);
+            now_floor.GetComponent<BoxCollider2D>().enabled = false;
         }
         else if (other.gameObject.tag == "DeathFloor")
         {
             Debug.Log("_You Died_");
+            
+            Time.timeScale = 0;
+            button.SetActive(true); 
         }
+        
 
+    }
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject == now_floor)
+        {
+            now_floor = null;
+        }
+    }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Coin")
+        {
+            Debug.Log("Coin Collected");
+            
+            scorescript.ScoreIncrease(10);
+            
+        }
     }
     void health(int point)
     {
@@ -66,7 +125,14 @@ public class player : MonoBehaviour
         {
             currentHealth += point;
         }
+        if(currentHealth <= 0)
+        {
+            Time.timeScale = 0;
+            button.SetActive(true); 
+        }
             
         healthBar.SetHealth(currentHealth);
     }
+
+    
 }

@@ -6,9 +6,15 @@ public class GameControl : MonoBehaviour
     public PanBehaviourScript panScript;
     public Transform PanOffset;
     public PanOffset panOffsetScript;
+
     public TrapBehaviourScript trapScript;
     public Transform TrapOffset;
     public TrapOffset trapOffsetScript;
+
+    public CoinBehaviourScript coinScript;
+    public Transform CoinOffset;
+
+    
     void Start()
     {
      
@@ -16,7 +22,7 @@ public class GameControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
     }
@@ -29,5 +35,10 @@ public class GameControl : MonoBehaviour
     {
         //Debug.Log("Spawn Trap Called");
         Instantiate(trapScript, TrapOffset.position, TrapOffset.rotation, transform);
+    }
+    public void SpawnCoin()
+    {
+        
+        Instantiate(coinScript, CoinOffset.position, CoinOffset.rotation, transform);
     }
 }

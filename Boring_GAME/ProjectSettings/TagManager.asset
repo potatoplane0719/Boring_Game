@@ -8,6 +8,8 @@ TagManager:
   - Trap
   - Ceiling
   - DeathFloor
+  - Coin
+  - Button
   layers:
   - Default
   - TransparentFX
