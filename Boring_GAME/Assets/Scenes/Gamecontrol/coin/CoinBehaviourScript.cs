@@ -23,7 +23,7 @@ public class CoinBehaviourScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            other.GetComponent<AudioSource>().Play();
+
             Destroy(gameObject);
             transform.parent.GetComponent<GameControl>().SpawnCoin();
         }

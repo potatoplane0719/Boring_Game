@@ -11,12 +11,16 @@ public class player : MonoBehaviour
 
     private Animator animator;
     [SerializeField] GameObject button;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public AudioSource audioSource;
+    public AudioClip coinaudioClip;
+    public AudioClip hurtAudio;
+    public AudioClip stepAudio;
     public void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-        animator = GetComponent<Animator>();        
+        animator = GetComponent<Animator>();
+        audioSource = gameObject.GetComponent<AudioSource>();
         button.SetActive(false); 
     }
 
@@ -71,6 +75,7 @@ public class player : MonoBehaviour
             {
                 //Debug.Log("Landed on Top of Pan");
                 health(10);
+                audioSource.PlayOneShot(stepAudio,1);
                 now_floor = other.gameObject;
             }
         }
@@ -80,6 +85,7 @@ public class player : MonoBehaviour
             if (other.contacts[0].normal.y > 0.5f)
             {
                 //Debug.Log("Landed on Top of Trap");
+                audioSource.PlayOneShot(hurtAudio,1);
                 health(-20);
                 now_floor = other.gameObject;
             }
@@ -112,7 +118,7 @@ public class player : MonoBehaviour
         if (collision.gameObject.tag == "Coin")
         {
             Debug.Log("Coin Collected");
-            
+            audioSource.PlayOneShot(coinaudioClip,1);
             scorescript.ScoreIncrease(10);
             
         }
