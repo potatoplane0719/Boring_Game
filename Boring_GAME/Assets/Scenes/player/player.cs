@@ -74,7 +74,7 @@ public class player : MonoBehaviour
             if (other.contacts[0].normal.y > 0.5f)
             {
                 //Debug.Log("Landed on Top of Pan");
-                health(10);
+                health(15);
                 audioSource.PlayOneShot(stepAudio,1);
                 now_floor = other.gameObject;
             }
@@ -86,7 +86,7 @@ public class player : MonoBehaviour
             {
                 //Debug.Log("Landed on Top of Trap");
                 audioSource.PlayOneShot(hurtAudio,1);
-                health(-20);
+                health(-25);
                 now_floor = other.gameObject;
             }
         }
@@ -125,11 +125,15 @@ public class player : MonoBehaviour
     }
     void health(int point)
     {
-        Debug.Log("health: " + point);
-        Debug.Log("current Health: " + currentHealth);
+        //Debug.Log("health: " + point);
+        //Debug.Log("current Health: " + currentHealth);
         if (currentHealth + point <= maxHealth)
         {
             currentHealth += point;
+        }
+        else
+        {
+            currentHealth = maxHealth;
         }
         if(currentHealth <= 0)
         {

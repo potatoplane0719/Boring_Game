@@ -9,7 +9,7 @@ public class PanBehaviourScript : MonoBehaviour
     void Start()
     {
         
-        randomX = Random.Range(-2.1f, 2.1f);
+        randomX = Random.Range(-2.3f, 2.3f);
         transform.Translate(randomX,0, 0);
     }
     private void Update()

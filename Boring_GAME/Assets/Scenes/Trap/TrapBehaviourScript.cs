@@ -9,7 +9,7 @@ public class TrapBehaviourScript : MonoBehaviour
     void Start()
     {
         
-        randomX = Random.Range(-2.4f, 2.4f);
+        randomX = Random.Range(-2.6f, 2.6f);
         transform.Translate(randomX,0, 0);
     }
     private void Update()

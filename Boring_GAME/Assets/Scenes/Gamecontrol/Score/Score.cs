@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Score : MonoBehaviour
 {
-    float pasttime = 0f;
+    [SerializeField] float pasttime = 0f;
     int score = 0;
     public Text scoreText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,9 +21,13 @@ public class Score : MonoBehaviour
             score += 1;
             pasttime = 0f;
             scoreText.text = "Score : " + score;
-            
+            if ( score > 1000)
+            {
+                
+                GetComponent<GameControl>().SpawnTrap();
+            }
         }
-
+        
     }
     public void ScoreIncrease(int increment)
     {

@@ -13,8 +13,8 @@ public class GameControl : MonoBehaviour
 
     public CoinBehaviourScript coinScript;
     public Transform CoinOffset;
-
-    
+    float CoinSpawning = 0f;
+    public float CoinSpawnInterval = 1.5f;
     void Start()
     {
      
@@ -24,6 +24,17 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        CoinSpawning += Time.deltaTime;
+        Debug.Log(CoinSpawning);
+        if(CoinSpawning >= CoinSpawnInterval)
+        {
+            SpawnCoin();
+            CoinSpawning = 0f;
+        }
+        if (Input.GetKey(KeyCode.P))
+        {
+            SpawnCoin();
+        }
         
     }
     public void Spawn()
